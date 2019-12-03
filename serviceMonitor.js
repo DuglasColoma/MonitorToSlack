@@ -48,6 +48,5 @@ function test() {
     status = new ServiceMonitor().monitor(services);
     status.then(rto => {console.log(rto)});
 }
-test();
 
 module.exports = ServiceMonitor;
