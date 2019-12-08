@@ -2,11 +2,12 @@ class ServiceMonitor{
     constructor(){
     }
     async monitor(services){
-        let status = {
-        }
+        let status = [];
         for (let service of services) {
             let isAlive = await this.ping(service);
-            status[service.service] = isAlive;
+            status.push({ service: service.service,
+                    alive : isAlive
+                });
         }
         return status;
     }
@@ -20,33 +21,13 @@ class ServiceMonitor{
         });
     }
 }
-
-function test() {
-    let services = [
-        {
-            service : "Logging",
-            address : "localhost",
-            port    : 5002,
-            timeout : 1000,
-            attempts: 1
-        },
-        {
-            service : "UNQfy",
-            address : "localhost",
-            port    : 5000,
-            timeout : 1000,
-            attempts: 1
-        },
-        {
-            service : "Notification",
-            address : "localhost",
-            port    : 5003,
-            timeout : 1000,
-            attempts: 1
-        }
-    ],
-    status = new ServiceMonitor().monitor(services);
-    status.then(rto => {console.log(rto)});
+/*
+{
+    service : "Notification",
+    address : "localhost",
+    port    : 5003,
+    timeout : 1000,
+    attempts: 1
 }
-
+*/
 module.exports = ServiceMonitor;

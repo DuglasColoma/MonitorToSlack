@@ -1,8 +1,6 @@
 var request = require("request");
 
-var urlWebHook = "https://hooks.slack.com/services/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"; 
-//var urlWebHook = ""; 
-//the URL you get on your "incoming web hooks" page.
+var urlWebHook = "https://hooks.slack.com/services/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"; 
 
 function send(message, theUsername, theIconUrl, theIconEmoji, theChannel) {
 	var payload = {

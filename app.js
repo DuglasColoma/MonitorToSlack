@@ -3,7 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const userRoutes = require('./routes/MonitorRoutes')
+const userRoutes = require('./routes/MonitorRoutes');
 
 app
 .use(morgan('dev'))

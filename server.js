@@ -5,4 +5,4 @@ const port = 5003;
 
 server = http.createServer(app);
 
-server.listen(port, () => console.log(`Listening to port ${port}`))
+server.listen(port, () => console.log(`Listening to port ${port}`));
