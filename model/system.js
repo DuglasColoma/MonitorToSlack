@@ -1,4 +1,5 @@
 const ServiceMonitor = require('../serviceMonitor.js')
+//the serviceMonitor throws pings to the ports and if the ip has an open port where it is expected it returns alive
 const senderModule = require('../sendToSlack');
 
 class Monitor{
@@ -56,15 +57,16 @@ class Monitor{
     }
 
     monitor(){
-        this.monitorAliveServices();
-        this.monitorDeadServices();
-        if(this.active){
-            setInterval( () => this.monitor(), 120000);
-        }
+        this.monitorAliveServices();//monitor the services in the alive list
+        this.monitorDeadServices();//monitor the services in the dead list
+        setInterval( () => {
+            if(this.active){
+                    this.monitor()}
+        }, 5000);//repeats the monitor method each x miliseconds
     }
 
     informAlive(services){
-        for(let service of services){
+        for(let service of services){//for each service in the alive list checks if they are still alive otherwise it lets you know that the service died
             if (!service.alive){
                 var servicio = this.filter(this.services, service.service);
                 this.deadServices.push(servicio);
@@ -76,7 +78,7 @@ class Monitor{
     }
 
     informDead(services){
-        for(let service of services){
+        for(let service of services){//for each service in the dead list checks if they are still dead otherwise it lets you know that the service went back to normal
             if (service.alive){
                 var servicio = this.filter(this.deadServices, service.service);
                 this.deadServices.filter(elem => elem.service != servicio.service);
@@ -105,7 +107,7 @@ class Monitor{
     }
 
     monitorDeadServices(){
-        this.serviceMonitor.monitor(this.services).then(rto => {this.informDead(rto)});
+        this.serviceMonitor.monitor(this.deadServices).then(rto => {this.informDead(rto)});
     }
 }
 
